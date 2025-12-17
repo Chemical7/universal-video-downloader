@@ -19,7 +19,7 @@ class VideoInfo(BaseModel):
     id: str
     title: str
     thumbnail: str
-    duration: Optional[int]
+    duration: Optional[float]
     formats: List[VideoFormat]
     original_url: str
 
