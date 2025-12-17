@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.see.G</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <main class="container">
+        <header>
+            <h1>A.<span class="gradient-text">see</span>.G</h1>
+            <p class="subtitle">Download video and audio from any social platform.</p>
+        </header>
+
+        <section class="search-section">
+            <div class="input-group">
+                <input type="text" id="urlInput" placeholder="Paste link here (YouTube, X, Instagram...)"
+                    autocomplete="off">
+                <button id="searchBtn" class="primary-btn">
+                    <span class="btn-text">Find Video</span>
+                    <div class="loader hidden"></div>
+                </button>
+            </div>
+            <p id="errorMsg" class="error-msg hidden"></p>
+        </section>
+
+        <section id="resultSection" class="result-section hidden">
+            <div class="glass-card">
+                <div class="video-preview">
+                    <img id="thumbnail" src="" alt="Thumbnail">
+                    <div class="video-meta">
+                        <h2 id="videoTitle">Video Title</h2>
+                        <span id="videoDuration" class="badge">00:00</span>
+                    </div>
+                </div>
+
+                <div class="download-options">
+                    <div class="option-group">
+                        <label>Format</label>
+                        <select id="formatSelect">
+                            <!-- Options populated via JS -->
+                        </select>
+                    </div>
+
+                    <div class="option-group toggle-group">
+                        <label class="switch">
+                            <input type="checkbox" id="audioOnlyToggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span>Audio Only</span>
+                    </div>
+                </div>
+
+                <button id="downloadBtn" class="action-btn">
+                    Download Now
+                </button>
+            </div>
+        </section>
+
+        <section id="downloadStatus" class="status-section hidden">
+            <!-- Download progress or messaging could go here -->
+        </section>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
