@@ -409,3 +409,37 @@ input:checked+.slider:before {
         align-items: stretch;
     }
 }
+
+/* Orientation Icons */
+.orientation-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.orientation-icon {
+    display: inline-block;
+    border: 2px solid var(--text-muted);
+    border-radius: 4px;
+    background: transparent;
+    transition: 0.3s;
+}
+
+.orientation-icon.portrait {
+    width: 14px;
+    height: 24px;
+    border-color: var(--accent);
+}
+
+.orientation-icon.landscape {
+    width: 24px;
+    height: 14px;
+    border-color: var(--accent);
+}
+
+.orientation-icon.square {
+    width: 18px;
+    height: 18px;
+    border-color: var(--accent);
+}

@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoDuration = document.getElementById('videoDuration');
     const orientationInfo = document.getElementById('orientationInfo');
     const orientationValue = document.getElementById('orientationValue');
+    const orientationIcon = document.getElementById('orientationIcon');
     const formatSelect = document.getElementById('formatSelect');
     const downloadBtn = document.getElementById('downloadBtn');
 
@@ -105,10 +106,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (format && format.width && format.height) {
             let orientation = 'Square';
-            if (format.width > format.height) orientation = 'Landscape';
-            if (format.height > format.width) orientation = 'Portrait';
+            let iconClass = 'square';
+
+            if (format.width > format.height) {
+                orientation = 'Landscape';
+                iconClass = 'landscape';
+            }
+            if (format.height > format.width) {
+                orientation = 'Portrait';
+                iconClass = 'portrait';
+            }
 
             orientationValue.textContent = `${orientation} (${format.width}x${format.height})`;
+
+            // multiple classes cleanup
+            orientationIcon.classList.remove('portrait', 'landscape', 'square');
+            orientationIcon.classList.add(iconClass);
+
             orientationInfo.classList.remove('hidden');
         } else {
             orientationInfo.classList.add('hidden');
