@@ -1,8 +1,10 @@
 import yt_dlp
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Response
 from pydantic import BaseModel
+import requests
 from typing import List, Optional
 import os
+from urllib.parse import quote
 
 router = APIRouter()
 
@@ -54,7 +56,7 @@ async def get_video_info(url: str):
             return VideoInfo(
                 id=info.get('id'),
                 title=info.get('title'),
-                thumbnail=info.get('thumbnail'),
+                thumbnail=f"/api/proxy_image?url={quote(info.get('thumbnail'))}" if info.get('thumbnail') else None,
                 duration=info.get('duration'),
                 formats=formats,
                 original_url=url
@@ -79,5 +81,20 @@ async def get_download_url(url: str, format_id: str):
                  raise HTTPException(status_code=404, detail="Format not found")
             
             return {"direct_url": found_format.get('url')}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.get("/proxy_image")
+async def proxy_image(url: str):
+    try:
+        # We might need headers to mimic a browser so IG doesn't block us
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        resp = requests.get(url, headers=headers, stream=True)
+        if resp.status_code != 200:
+             raise HTTPException(status_code=404, detail="Image not found")
+        
+        return Response(content=resp.content, media_type=resp.headers.get("Content-Type", "image/jpeg"))
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
