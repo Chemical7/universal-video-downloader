@@ -1,5 +1,6 @@
 import yt_dlp
 from fastapi import APIRouter, HTTPException, Query, Response
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 import requests
 from typing import List, Optional
@@ -70,11 +71,6 @@ async def get_video_info(url: str):
 
 @router.get("/download")
 async def get_download_url(url: str, format_id: str):
-    """
-    For now, return the direct URL if available. 
-    In the future/for some sites, we might need to proxy the stream 
-    or download-and-serve if the URL is signed/expiring.
-    """
     try:
         ydl_opts = {'quiet': True}
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -84,8 +80,32 @@ async def get_download_url(url: str, format_id: str):
             if not found_format:
                  raise HTTPException(status_code=404, detail="Format not found")
             
-            return {"direct_url": found_format.get('url')}
+            download_url = found_format.get('url')
+            if not download_url:
+                raise HTTPException(status_code=404, detail="Download URL not found")
+
+            # Stream the file content
+            def iterfile():
+                with requests.get(download_url, stream=True) as r:
+                    r.raise_for_status()
+                    for chunk in r.iter_content(chunk_size=8192):
+                        yield chunk
+            
+            # Try to guess filename
+            ext = found_format.get('ext', 'mp4')
+            title = info.get('title', 'video')
+            # Sanitize filename (basic)
+            filename = "".join([c for c in title if c.isalpha() or c.isdigit() or c==' ']).rstrip()
+            filename = f"{filename}.{ext}" if filename else f"video.{ext}"
+
+            return StreamingResponse(
+                iterfile(), 
+                media_type="application/octet-stream",
+                headers={"Content-Disposition": f'attachment; filename="{filename}"'}
+            )
+
     except Exception as e:
+        print(f"Error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/proxy_image")

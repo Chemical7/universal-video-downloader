@@ -129,24 +129,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function handleDownload() {
+    function handleDownload() {
         if (!currentVideoInfo) return;
 
         const formatId = formatSelect.value;
-        // For now, we redirect to the direct URL if the backend merely echoes it
-        // Or we trigger a download from the backend
+        const downloadUrl = `/api/download?url=${encodeURIComponent(currentVideoInfo.original_url)}&format_id=${formatId}`;
 
+        // Trigger download by navigating - backend now returns StreamingResponse with attachment
         try {
-            const response = await fetch(`/api/download?url=${encodeURIComponent(currentVideoInfo.original_url)}&format_id=${formatId}`);
-            if (!response.ok) throw new Error('Download failed to start');
-
-            const data = await response.json();
-            if (data.direct_url) {
-                // Create a temporary link to download
-                window.open(data.direct_url, '_blank');
-            }
+            // Optional: Check if link is alive before navigating, or just go for it.
+            // "Going for it" is simplest for file downloads.
+            window.location.href = downloadUrl;
         } catch (err) {
-            alert('Error: ' + err.message);
+            alert('Error starting download: ' + err.message);
         }
     }
 
