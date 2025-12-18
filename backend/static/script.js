@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const thumbnail = document.getElementById('thumbnail');
     const videoTitle = document.getElementById('videoTitle');
     const videoDuration = document.getElementById('videoDuration');
+    const orientationInfo = document.getElementById('orientationInfo');
+    const orientationValue = document.getElementById('orientationValue');
     const formatSelect = document.getElementById('formatSelect');
     const downloadBtn = document.getElementById('downloadBtn');
 
@@ -21,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') handleSearch();
     });
 
+
+
+    formatSelect.addEventListener('change', updateOrientationDisplay);
     downloadBtn.addEventListener('click', handleDownload);
 
     function setLoading(isLoading) {
@@ -84,7 +89,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+
+
+        // Initial orientation update
+        updateOrientationDisplay();
+
         resultSection.classList.remove('hidden');
+    }
+
+    function updateOrientationDisplay() {
+        if (!currentVideoInfo) return;
+
+        const formatId = formatSelect.value;
+        const format = currentVideoInfo.formats.find(f => f.format_id === formatId);
+
+        if (format && format.width && format.height) {
+            let orientation = 'Square';
+            if (format.width > format.height) orientation = 'Landscape';
+            if (format.height > format.width) orientation = 'Portrait';
+
+            orientationValue.textContent = `${orientation} (${format.width}x${format.height})`;
+            orientationInfo.classList.remove('hidden');
+        } else {
+            orientationInfo.classList.add('hidden');
+        }
     }
 
     async function handleDownload() {

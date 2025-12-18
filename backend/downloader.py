@@ -16,6 +16,8 @@ class VideoFormat(BaseModel):
     url: Optional[str] = None
     vcodec: Optional[str] = None
     acodec: Optional[str] = None
+    width: Optional[int] = None
+    height: Optional[int] = None
 
 class VideoInfo(BaseModel):
     id: str
@@ -50,7 +52,9 @@ async def get_video_info(url: str):
                     filesize=f.get('filesize'),
                     url=f.get('url'),
                     vcodec=f.get('vcodec'),
-                    acodec=f.get('acodec')
+                    acodec=f.get('acodec'),
+                    width=f.get('width'),
+                    height=f.get('height')
                 ))
 
             return VideoInfo(
