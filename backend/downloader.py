@@ -91,6 +91,7 @@ async def get_video_info(url: str):
 
 @router.get("/download")
 async def get_download_url(url: str, format_id: str):
+    try:
         # Impersonate iOS client
         ydl_opts = {
             'quiet': True,
