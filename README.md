@@ -128,4 +128,4 @@ This tool is for personal use only. Please respect copyright laws and terms of s
 
 ---
 
-Made with ❤️ by Chemical7
+Made with ❤️ by Brian Leputu
