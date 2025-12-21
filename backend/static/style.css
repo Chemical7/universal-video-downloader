@@ -259,12 +259,38 @@ input[type="text"]:focus {
     overflow: hidden;
 }
 
+.meta-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
 .badge {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    /* More subtle glass */
+    padding: 6px 12px;
+    border-radius: 20px;
+    /* Pill shape */
+    font-size: 0.85rem;
+    font-weight: 500;
     color: var(--text-muted);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
+
+.badge:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.badge-icon {
+    font-size: 1rem;
+    line-height: 1;
 }
 
 .download-options {
@@ -411,17 +437,19 @@ input:checked+.slider:before {
 }
 
 /* Orientation Icons */
+/* Orientation Icons */
+/* Wrapper removed in favor of generic badge structure, but kept for legacy if needed */
 .orientation-wrapper {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 5px;
 }
 
 .orientation-icon {
     display: inline-block;
-    border: 2px solid var(--text-muted);
-    border-radius: 4px;
+    border: 1.5px solid currentColor;
+    /* Use text color (muted or white on hover) */
+    border-radius: 3px;
     background: transparent;
     transition: 0.3s;
 }

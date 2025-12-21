@@ -41,11 +41,16 @@
                     <img id="thumbnail" src="" alt="Thumbnail">
                     <div class="result-details">
                         <h3 id="videoTitle"></h3>
-                        <p>Duration: <span id="videoDuration"></span></p>
-                        <p id="orientationInfo" class="hidden orientation-wrapper">
-                            <span id="orientationIcon" class="orientation-icon"></span>
-                            <span>Orientation: <span id="orientationValue"></span></span>
-                        </p>
+                        <div class="meta-row">
+                            <span class="badge">
+                                <span class="badge-icon">⏱️</span>
+                                <span id="videoDuration"></span>
+                            </span>
+                            <span id="orientationBadge" class="badge hidden">
+                                <span id="orientationIcon" class="orientation-icon"></span>
+                                <span id="orientationValue"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -57,12 +62,12 @@
                         </select>
                     </div>
 
-                    <div class="option-group toggle-group">
+                    <div class="option-group toggle-group" style="flex: 0 0 auto;">
+                        <label>Audio Only</label>
                         <label class="switch">
                             <input type="checkbox" id="audioOnlyToggle">
                             <span class="slider round"></span>
                         </label>
-                        <span>Audio Only</span>
                     </div>
                 </div>
 

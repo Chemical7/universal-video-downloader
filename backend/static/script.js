@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const thumbnail = document.getElementById('thumbnail');
     const videoTitle = document.getElementById('videoTitle');
     const videoDuration = document.getElementById('videoDuration');
-    const orientationInfo = document.getElementById('orientationInfo');
+    const orientationBadge = document.getElementById('orientationBadge');
     const orientationValue = document.getElementById('orientationValue');
     const orientationIcon = document.getElementById('orientationIcon');
     const formatSelect = document.getElementById('formatSelect');
@@ -123,9 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
             orientationIcon.classList.remove('portrait', 'landscape', 'square');
             orientationIcon.classList.add(iconClass);
 
-            orientationInfo.classList.remove('hidden');
+            orientationBadge.classList.remove('hidden');
         } else {
-            orientationInfo.classList.add('hidden');
+            orientationBadge.classList.add('hidden');
         }
     }
 
